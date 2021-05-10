@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { Switch, Route, Redirect } from "react-router-dom";
+import Home from "./Pages/Home";
+import PostList from "./Pages/PostList";
+import PostDescription from "./Pages/PostDescription";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<div>
+			<Switch>
+				<Route exact path="/" component={Home}></Route>
+				<Route exact path="/posts-list" component={PostList}></Route>
+				<Route
+					exact
+					path="/post-description/:id"
+					component={PostDescription}
+				></Route>
+				<Redirect to="/" />
+			</Switch>
+		</div>
+	);
 }
 
 export default App;
