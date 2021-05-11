@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 const PostList = () => {
 	const [post, setPost] = useState([]);
+	const [search, setSearch] = useState("");
 
 	useEffect(() => {
 		const getData = async () => {
@@ -11,23 +12,27 @@ const PostList = () => {
 			);
 			setPost(data);
 		};
-
 		getData();
-		// axios.get("https://jsonplaceholder.typicode.com/posts").then((response) => {
-		// 	const post = response.data;
-		// 	console.log(post);
-		// 	setPost(post);
-		// });
 	}, []);
+
+	const filteredPost = post.filter(({ title }) =>
+		title.toLowerCase().includes(search.toLowerCase())
+	);
+
 	return (
 		<div>
+			<input
+				type="text"
+				id="search"
+				name="search"
+				onChange={(evt) => setSearch(evt.target.value)}
+				placeholder="Search for Posts"
+				value={search}
+			/>
 			<ul>
-				{post.map((post) => (
-					<Link to={`/post-description/${post.id}`}>
-						<li>
-							{console.log(post)}
-							{post.title}
-						</li>
+				{filteredPost.map(({ title, id }) => (
+					<Link to={`/post-description/${id}`} key={id}>
+						<li>{title}</li>
 					</Link>
 				))}
 			</ul>
